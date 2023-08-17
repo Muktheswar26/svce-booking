@@ -66,6 +66,12 @@ function Login() {
               <Link to="/signup">Sign up</Link>
             </span>
           </p>
+          <p>
+           Forgoten Password??{" "}
+            <span>
+              <Link to="/resetpassword">ResetPassword</Link>
+            </span>
+          </p>
         </div>
       </div>
     </div>

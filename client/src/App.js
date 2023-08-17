@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Home from "./components/Home/Home";
 import Layout from "./components/Layout/Layout";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 import { auth } from "./firebase";
 
 import "./App.css";
@@ -25,14 +26,13 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
+        <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Landing />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/user" element={<Layout name={userName} />}>
             <Route path="home" element={<Home name={userName} />} />
           </Route>
-
-
         </Routes>
       </Router>
     </div>

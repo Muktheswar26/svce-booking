@@ -5,7 +5,7 @@ const Layout = (props) => {
   return (
     <div>
          <div>
-                <h2>{props.name ? <Outlet/> : "Login please"}</h2>
+                <h2>{props.name ? <Outlet/> : "Login please. If loggned in Refresh the page"}</h2>
             </div>
     </div>
   )
