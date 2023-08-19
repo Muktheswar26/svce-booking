@@ -51,9 +51,8 @@ function Home(props) {
     }else{
       console.log("gone case")
     }
-
-    
         setModalOpen(false)
+        alert("Payment done!!!");
     }
 
     const handleSignOut = () => {
@@ -76,8 +75,10 @@ function Home(props) {
     const handleClose = (value) => {
         console.log(value)
         setBokkingSlot(value)
+        
         setAnchorEl(null);
         setModalOpen(true)
+       
 
     };
 
