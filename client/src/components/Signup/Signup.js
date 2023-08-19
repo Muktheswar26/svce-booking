@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-import InputControl from "../InputControl/InputControl";
-import { auth } from "../../firebase";
 
+import InputControl from "../InputControl/InputControl";
+import { auth} from "../../firebase";
 import styles from "./Signup.module.css";
 
 function Signup() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
+    usn:"",
     name: "",
     email: "",
     pass: "",
@@ -17,8 +18,21 @@ function Signup() {
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
+  const addUserToData = async (userEmail,userName,userUsn)=>{
+    const response = fetch(`https://svce-booking-default-rtdb.firebaseio.com/users/${userUsn}.json`,{
+      method:"PUT",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({userEmail:userEmail,userName:userName,booking:false,date:"not booked",slot:"not selected"})
+    })  
+    if(response){
+      console.log("data added")
+    }else{
+      console.log("gone case")
+    }
+  };
+
   const handleSubmission = () => {
-    if (!values.name || !values.email || !values.pass) {
+    if (!values.name || !values.email || !values.pass || !values.usn) {
       setErrorMsg("Fill all fields");
       return;
     }
@@ -30,8 +44,11 @@ function Signup() {
         setSubmitButtonDisabled(false);
         const user = res.user;
         await updateProfile(user, {
-          displayName: values.name,
+          photoURL:values.usn,
+          displayName: values.name
+          
         });
+        addUserToData(values.email,values.name,values.usn)
         navigate("/");
       })
       .catch((err) => {
@@ -44,6 +61,14 @@ function Signup() {
     <div className={styles.container}>
       <div className={styles.innerBox}>
         <h1 className={styles.heading}>Signup</h1>
+
+        <InputControl
+          label="USN"
+          placeholder="Enter your USN"
+          onChange={(event) =>
+            setValues((prev) => ({ ...prev, usn: event.target.value }))
+          }
+        />
 
         <InputControl
           label="Name"

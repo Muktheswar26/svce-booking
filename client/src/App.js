@@ -7,17 +7,19 @@ import Signup from "./components/Signup/Signup";
 import Home from "./components/Home/Home";
 import Layout from "./components/Layout/Layout";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import Admin from "./components/Admin/Admin";
 import { auth } from "./firebase";
 
 import "./App.css";
 
 function App() {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setUserName(user.displayName);
+        console.log(user)
+        setUserName(user);
       } else setUserName("");
     });
   }, []);
@@ -29,6 +31,7 @@ function App() {
         <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/admin" element={<Admin/>}/>
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/user" element={<Layout name={userName} />}>
             <Route path="home" element={<Home name={userName} />} />
